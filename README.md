@@ -10,11 +10,11 @@
 ## Things I WON'T cover
 * Grunt/Gulp build processes
 * Deployment
-* Server/server optimizations
+* Server and/or server optimizations
 * JavaScript/HTML/CSS intro
 * Start to finish process of an Angular App
 
-We won't even be using grunt/gulp to serve the project (_gasp_).  This is intended to be focused on the code.
+We'll be using a generated project layout with a few changes to run the project but this is intended to be focused on the code.
 
 ## Agenda
 * AngularJS 10,000 foot overview

@@ -1,0 +1,33 @@
+<h1>Phonebook</h1>
+<div class="jumbotron">
+	<p>Search here for contacts by first or last name.</p>
+	<form class="form-inline" role="form">
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">Search</div>
+				<input class="form-control" type="text" ng-model='searchText' placeholder="First or Last">
+			</div>
+		</div>
+		<button type="submit" ng-click='search()' class="btn btn-default">Go</button>
+	</form>
+</div>
+<div class="row">
+	<div class="col-sm-12 col-lg-6">
+		<h3>Search Results</h3>
+		<p class="muted" ng-show='!!searchText && searchResults && searchResults.length === 0'>No results found.</p>
+		<ul>
+			<li ng-repeat='contact in searchResults'>{{contact.name}} ({{contact.company}})
+				<button type="button" class="btn btn-success btn-lg">
+					<span class="glyphicon glyphicon-star"></span>
+				</button>
+			</li>
+		</ul>
+	</div>
+	<div class="col-sm-12 col-lg-6">
+		<h3>Your Favorites</h3>
+		<ul>
+			<li ng-repeat='favorite in favorites'></li>
+		</ul>
+		<p class="muted" ng-show='favorites && favorites.length === 0'>No favorites added.</p>
+	</div>
+</div>
