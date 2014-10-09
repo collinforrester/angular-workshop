@@ -1,0 +1,38 @@
+<div favorite-state contact='contact'><button ng-click='addToFavorites(contact)' class="btn btn-success ">
+	Add Favorite <span class="glyphicon glyphicon-star"></span>
+	</button>
+	<div class="media">
+		<a class="pull-left" href="#">
+			<img class="media-object" ng-src="{{contact.picture}}" alt="...">
+		</a>
+		<div class="media-body">
+			<h3 class="media-heading">{{contact.name}}</h3>
+			<div class="row">
+				<div class="col-sm-3">
+					<dl>
+						<dt>Email</dt>
+						<dd><a href='mailto:{{contact.email}}'>{{contact.email}}</a></dd>
+						<dt>Phone</dt>
+						<dd><a href='tel:{{contact.phone}}'>{{contact.phone}}</a></dd>
+					</dl>
+				</div>
+				<div class="col-sm-3">
+					<dl>
+						<dt>Company</dt>
+						<dd>{{contact.company}}</dd>
+						<dt>Address</dt>
+						<dd>{{contact.address}}</dd>
+					</dl>
+				</div>
+				<div class="col-sm-2">
+					<dl>
+						<dt>Latitude</dt>
+						<dd>{{contact.latitude}}</dd>
+						<dt>Longitude</dt>
+						<dd>{{contact.longitude}}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -15,7 +15,10 @@ module.exports.bootstrap = function(cb) {
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   function loadData() {
   	var data = JSON.parse(require('fs').readFileSync('./data/contacts.json'));
-  	sails.models.contact.create(data).exec(cb);
+  	sails.models.contact.create(data).exec(function(err, contacts) {
+  		if(err) throw err;
+  		sails.models.favorite.create({ contact: 1 }).exec(cb);
+  	});
   }
   try {
 	  var currentDatabase = JSON.parse(require('fs').readFileSync('./.tmp/localDiskDb.db'));

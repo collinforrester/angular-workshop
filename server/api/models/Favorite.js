@@ -8,29 +8,8 @@
 module.exports = {
 
   attributes: {
-    picture: {
-      type: 'string'
-    },
-    name: {
-      type: 'string'
-    },
-    company: {
-      type: 'string'
-    },
-    email: {
-      type: 'string'
-    },
-    phone: {
-      type: 'string'
-    },
-    address: {
-      type: 'string'
-    },
-    latitude: {
-      type: 'float'
-    },
-    longitude: {
-      type: 'float'
+    contact: {
+    	model: 'contact'
     }
   }
 };

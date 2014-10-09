@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-sm-12 col-lg-6">
+		<h3>Your Favorites</h3>
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat='favorite in favorites'>
+				<span class="pull-right">
+					<button ng-click='removeFromFavorites(favorite.id)' class="btn btn-danger ">
+					Remove Favorite <span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</span>
+				<span class="pull-right">
+					<a ng-href='#/details/{{favorite.contact.id}}' class="btn btn-default details">
+						Details
+					</a>
+				</span>
+				<p>{{favorite.contact.name}} (<a href='tel:{{favorite.contact.phone}}'>{{favorite.contact.phone}}</a>)</p>
+			</li>
+		</ul>
+		<p class="muted" ng-show='favorites && favorites.length === 0'>No favorites added.</p>
+	</div>
+</div>

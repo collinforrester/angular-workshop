@@ -16,7 +16,7 @@ There are no unit tests on any of the controllers and all of the HTTP requests a
 
 Error handling is done on each individual HTTP call and is showed to the user individually on each view.
 
-All of the code is inside of `app/scripts/main.js`.  This includes the directive, controller, and 1 constant.
+All of the code is inside of `app/scripts/app.js`.  This includes the directive, controller, and 1 constant.
 
 ### Group Work
 
@@ -38,13 +38,13 @@ We'll work together on refactoring the controller `$http` code to use `$resource
 
 The lab work for this step will be to create the `Favorite` factory in a similar fashion as the `Contact` factory.  This new factory will include the ability to create (built in), `query()` (built in), and `email()`.
 
-## Step 3 - Refactor Existing Directive
+## Step 3 - Refactor Existing Directive Into New One
 
 The existing `favorite-state` directive is used in the `/` view to notify the user if a contact is already added to their favorites.  In its current state, the directive makes a call to `/api/favorites` for every element in the `ng-repeat`.  It also doesn't use our new factory that we created in the previous step.
 
 ### Group Work
 
-We're going to update the existing directive to use the `$compile` phase to cache the information about the user's existing favorites to illustrate the difference between the `$compile` and `$link` phase.  We're also going to use the new factory from the last step to make the HTTP call.
+We're going to update the existing directive to use the `$compile` phase to cache the information about the user's existing favorites to illustrate the difference between the `compile` and `link` phases.  We're also going to use the new factory from the last step to make the HTTP call.
 
 // TODO - add group work for adding new notifications directive
 
