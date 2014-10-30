@@ -197,6 +197,7 @@
 							* SailJS generated REST API
 							* Basic CRUD end points available
 							* Start with `cd server && node app.js`
+							* Hit http://localhost:1337/api/contact in a browser to verify its up (should see some JSON data)
 						</script>
 					</section>
 					<!-- Slide -->
@@ -206,12 +207,37 @@
 
 							* Generated using Yeoman
 							* "legacy" Phonebook application
-							*
+							* Common problems - Form validation, CRUD screens, error handling, caching
+							* 3 routes: `/`, `/details:id/` and `/favorites`
+							* One existing directive, no services
+						</script>
+					</section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							## Sample Project
+
+							![Not modular](images/not-modular.png)
 						</script>
 					</section>
 				<!-- end section -->
 				</section>
+				<section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							## Lab 1 - Modules
 
+							* Task: Break the application into its appropriate pieces.
+							* Currently: All code is in `app.js`
+							* Final Result: `main.js`, `details.js`, and `favorites.js`
+
+							> Tip : Use yeoman to make this way faster.. 
+							>
+							> `yo angular:route main`
+						</script>
+					</section>
+				</section>
 
 
 
