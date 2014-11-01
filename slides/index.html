@@ -531,14 +531,104 @@
 					<!-- Slide -->
 					<section data-markdown>
 						<script type="text/template">
-							## Not quite there
+							## Handling Errors
 
-							![Not done](images/not-chips.png)
+							Our "backend team" has given us the luxury of consistent error messages and response formats.
 
-							* Error handling still copy pasted everywhere
-							* Duplicate HTTP requests being made
-							* No form validation
+							```
+							{
+	"message": "No phone number found for Queen Daniels"
+							}
+							```
 
+							This lets us handle errors at the application level instead of in each individual controller (that option is still valid, too).
+
+						</script>
+					</section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							## Handling Errors
+
+							Old & busted
+							```
+							$http.get('/api/contact/1').then(function(response) {
+								$scope.contactOne = response.data;
+							}).catch(function(e) {
+								// handle Error e
+							})
+							```
+							New hotness
+							```
+							$scope.contactOne = Contact.get({ id: 1 }); // That's it.
+							```
+
+						</script>
+					</section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							## Creating our Error Interceptor
+
+							```
+							angular.module('iaw').factory('errorInterceptor', function($q, Notification) {
+  return {
+    'responseError': function(rejection) {
+      Notification.error('There was a problem with your request: ' + rejection.data.message + ' (' + rejection.status + ')';
+      return $q.reject(rejection);
+    }
+  };
+});
+							```
+							Dont forget to add it to the interceptor array with `$httpProvider`
+
+							```
+angular.module('iaw').config(function($httpProvider) {
+  $httpProvider.interceptors.push('cacheInvalidator');
+});
+							```
+
+						</script>
+					</section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							## Creating our Cache Invalidator Interceptor
+
+							```
+angular.module('iaw.interceptors', [])
+  .config(function($httpProvider) {
+    $httpProvider.interceptors.push('cacheInvalidator');
+  })
+  .factory('cacheInvalidator', function($cacheFactory) {
+    return {
+      'request': function(config) {
+        if (config.method !== 'GET') {
+          $cacheFactory.get('$http').removeAll();
+        }
+        return config;
+      }
+    };
+  });
+							```
+
+							You can also define your interceptors in a sub module like this.
+
+						</script>
+					</section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							## Lab 3 - Adding Interceptors
+
+							Tasks: 
+
+							* Add a generic error handling interceptor that publishes the errors using our Notification service from lab 2.
+							* Add a cache invalidating interceptor and update our `$resource`s to take advantage of Angulars built in cache.
+
+							> `yo angular:factory cacheInvalidator`
+							> 
+							> `yo angular:factory errorInterceptor`
 						</script>
 					</section>
 				</section>
