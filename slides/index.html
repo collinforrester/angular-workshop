@@ -260,13 +260,24 @@
 						<script type="text/template">
 							## Lab 0 - Modules
 
-							Task: Break the application into its appropriate pieces.
+							Task: Break the application into its appropriate functional modules / pieces.
 
 							To get started: `git checkout step-0`
 
 							> Tip : Use yeoman to make this way faster.. 
 							>
 							> `yo angular:route main`
+
+							```
+							➜  sample-project git:(lab-0) yo angular:route main
+					 invoke   angular:controller:/usr/local/lib/node_modules/generator-angular/route/index.js
+					 create     app/scripts/controllers/main.js
+					 create     test/spec/controllers/main.js
+					 invoke   angular:view:/usr/local/lib/node_modules/generator-angular/route/index.js
+					conflict     app/views/main.html
+					[?] Overwrite app/views/main.html? do not overwrite
+					   skip     app/views/main.html
+					   ```
 						</script>
 					</section>
 				</section>
