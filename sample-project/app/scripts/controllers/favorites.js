@@ -8,7 +8,7 @@
  * Controller of the phonebookApp
  */
 angular.module('phonebookApp')
-	.controller('FavoritesCtrl', function($scope, $http, $timeout, Favorite) {
+	.controller('FavoritesCtrl', function($scope, $timeout, Favorite) {
 		function showMessage(message, type) {
 			var id = Math.ceil(Math.random() * 99999999);
 			$scope.messages.push({

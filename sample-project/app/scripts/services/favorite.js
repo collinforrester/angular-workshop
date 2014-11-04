@@ -8,8 +8,8 @@
  * Factory in the phonebookApp.
  */
 angular.module('phonebookApp')
-  .factory('Favorite', function ($resource) {
-    var Favorite = $resource('http://localhost:1337/api/favorite/:id', {
+  .factory('Favorite', function ($resource, SERVICE_URL) {
+    var Favorite = $resource(SERVICE_URL + '/api/favorite/:id', {
       id: '@id'
     });
 

@@ -8,8 +8,8 @@
  * Factory in the phonebookApp.
  */
 angular.module('phonebookApp')
-  .factory('Contact', function ($resource) {
-    var Contact = $resource('http://localhost:1337/api/contact/:id', {
+  .factory('Contact', function ($resource, SERVICE_URL) {
+    var Contact = $resource(SERVICE_URL + '/api/contact/:id', {
       id: '@id'
     }, {
       sms: {

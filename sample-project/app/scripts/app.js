@@ -13,6 +13,7 @@ angular
     'ngResource',
     'ngRoute'
   ])
+  .constant('SERVICE_URL', 'http://localhost:1337')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
