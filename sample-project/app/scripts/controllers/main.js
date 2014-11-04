@@ -8,7 +8,7 @@
  * Controller of the phonebookApp
  */
 angular.module('phonebookApp')
-  .controller('MainCtrl', function ($scope, $http, $timeout) {
+  .controller('MainCtrl', function ($scope, $http, $timeout, Contact) {
     
 		function showMessage(message, type) {
 			var id = Math.ceil(Math.random() * 99999999);
@@ -26,23 +26,13 @@ angular.module('phonebookApp')
 			}, 3000);
 		}
 
-  	$scope.getContacts = function() {
-	  	$http({
-	  		url: 'http://localhost:1337/api/contact',
-	  		method: 'GET'
-	  	}).then(function(response) {
-	    	$scope.searchResults = response.data;
-	    	showMessage(response.data.length + ' results returned.', 'success');
-	    }).catch(function(e) {
-	    	showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')', 'danger');
-	    });
-  	};
+		$scope.searchResults = Contact.query();
 
     $scope.addToFavorites = function(contact) {
     	$http.post('http://localhost:1337/api/favorite', {
     		contact: contact.id
     	}).then(function(/*response*/) {
-		    $scope.getContacts();
+				$scope.searchResults = Contact.query();
 		    showMessage('Contact added to favorites', 'success');
 	    }).catch(function(e) {
 	    	showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')', 'danger');
@@ -50,5 +40,4 @@ angular.module('phonebookApp')
     };
 
     $scope.messages = [];
-    $scope.getContacts();
   });

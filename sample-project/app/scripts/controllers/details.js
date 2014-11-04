@@ -8,7 +8,7 @@
  * Controller of the phonebookApp
  */
 angular.module('phonebookApp')
-	.controller('DetailsCtrl', function($scope, $http, $routeParams, $timeout) {
+	.controller('DetailsCtrl', function($scope, $http, $routeParams, $timeout, Contact, Favorite) {
 		function showMessage(message, type) {
 			var id = Math.ceil(Math.random() * 99999999);
 			$scope.messages.push({
@@ -24,29 +24,14 @@ angular.module('phonebookApp')
 				}
 			}, 3000);
 		}
-		$scope.loadContactDetails = function() {
-			if ($routeParams.id) {
-				$http({
-					url: 'http://localhost:1337/api/contact/' + $routeParams.id,
-					method: 'GET'
-				}).then(function(response) {
-					$scope.contact = response.data;
-				}).catch(function(e) {
-					showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
-				});
-			}
-		};
+		$scope.contact = Contact.get({ id: $routeParams.id });
 		$scope.addToFavorites = function(contact) {
-			$http.post('http://localhost:1337/api/favorite', {
-				contact: contact.id
-			}).then(function( /*response*/ ) {
-				$scope.getContacts();
-				$scope.loadContactDetails();
-			}).catch(function(e) {
+			var favorite = new Favorite({ contact: contact.id });
+			favorite.$save(function() {
+				$scope.contact = Contact.get({ id: $routeParams.id }); // so the add favorite button updates
+			}, function(e) {
 				showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
 			});
 		};
-		$scope.loadContactDetails();
-
 		$scope.messages = [];
 	});

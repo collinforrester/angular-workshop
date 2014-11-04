@@ -8,7 +8,7 @@
  * Controller of the phonebookApp
  */
 angular.module('phonebookApp')
-	.controller('FavoritesCtrl', function($scope, $http, $timeout) {
+	.controller('FavoritesCtrl', function($scope, $http, $timeout, Favorite) {
 		function showMessage(message, type) {
 			var id = Math.ceil(Math.random() * 99999999);
 			$scope.messages.push({
@@ -24,25 +24,25 @@ angular.module('phonebookApp')
 				}
 			}, 3000);
 		}
-		$scope.removeFromFavorites = function(id) {
-			$http.delete('http://localhost:1337/api/favorite/' + id)
-				.then(function( /*response*/ ) {
-					$scope.getFavorites();
-				}).catch(function(e) {
-					showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
-				});
-		};
 
-		$scope.getFavorites = function() {
-			$http({
-				url: 'http://localhost:1337/api/favorite',
-				method: 'GET'
-			}).then(function(response) {
-				$scope.favorites = response.data;
-			}).catch(function(e) {
+		Favorite
+			.query()
+			.$promise
+			.then(function(data) {
+				$scope.favorites = data;
+			})
+			.catch(function(e) {
+				showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
+			});
+		
+		$scope.removeFromFavorites = function(favorite) {
+			var index = $scope.favorites.indexOf(favorite);
+			favorite.$delete(function() {
+				$scope.favorites.splice(index, 1);
+			}, function(e) {
 				showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
 			});
 		};
-		$scope.getFavorites();
+
 		$scope.messages = [];
 	});
