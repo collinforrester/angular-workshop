@@ -25,6 +25,23 @@ module.exports = {
 			}
 			return res.ok('SMS sent to ' + contact.name);
 		});
+	},
+	check: function(req, res) {
+		var name = req.params.all().name;
+
+		if(!name) {
+			return res.badRequest('Missing name parameter');
+		}
+		sails.models.contact.find({name: name}).exec(function(err, contact) {
+			if(err) {
+				return res.serverError(err);
+			}
+			if(!contact.length) {
+				return res.ok({ nameAvailable: true });
+			} else {
+				return res.ok({ nameAvailable: false });
+			}
+		}); 
 	}
 };
 

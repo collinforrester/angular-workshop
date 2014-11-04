@@ -34,10 +34,14 @@
 
 		<script src="js/angular.js"></script>
 		<script src="js/angular-resource.js"></script>
+		<script src="js/angular-messages.js"></script>
 
 		<script type="text/javascript">
 			angular.module('iaw', [
-				'iaw.resource'
+				'iaw.resource',
+				'iaw.databinding',
+				'iaw.directives',
+				'iaw.dependency'
 			]);
 			angular.module('iaw.constants', [])
 			.constant('BASE', 'http://localhost:1337');
@@ -72,7 +76,6 @@
 							* Lead Software Engineer [@Valvora](https://twitter.com/valvora)
 							* Co-Founder [@Visitu](https://twitter.com/getvisitu)
 							* Android, iOS, Phonegap, Node
-							* Husband, Denver Bronco fan
 						</script>
 					</section>
 					<!-- Slide -->
@@ -157,39 +160,140 @@
 						</script>
 					</section>
 					<!-- Slide -->
-					<section data-markdown>
-						<script type="text/template">
-							## Databinding
+					<script type="text/javascript">
+					angular.module('iaw.databinding', [])
+						.controller('DataBindingCtrl', function($scope) {
+							$scope.data = '';
+							$scope.once = 'abcd';
+							$scope.debouncedModel = '';
+						});
+					</script>
+					<section>
+						<h2>Databinding</h2>
 
-							TODO databinding example
+						<pre><code>&lt;input ng-model="data"></code></pre>
+		
+						<p ng-controller="DataBindingCtrl">
+							<input ng-model="data"><br>
+							data: {{data}}<br>
+							<input ng-model="once"><br>
+							once: {{::once}}
+						</p>
 
-							New in 1.3: 
-						</script>
+						<p>New in 1.3: <code>ngModelOptions</code> and one time bindings</p>
+
+						<pre><code>&lt;input ng-model="debouncedModel"></code></pre>
+
+						<p ng-controller="DataBindingCtrl">
+							<input ng-model="debouncedModel" ng-model-options="{debounce: 500}"><br>
+							debouncedModel: {{debouncedModel}}
+						</p>
 					</section>
 					<!-- Slide -->
-					<section data-markdown>
-						<script type="text/template">
-							## Directives
+					<script type="text/javascript">
+					angular.module('iaw.directives', ['ngMessages'])
+						.directive('myValidator', function($http, $q) {
+							return {
+				        require: 'ngModel',
+				        link: function(scope, element, attrs, ngModel) {
+			            ngModel.$asyncValidators.contactName = function(modelValue, viewValue) {
+		                return $http
+		                	.get('http://localhost:1337/api/contact/check?name='+viewValue)
+		                	.then(
+		                    function(response) {
+	                        if (!response.data.nameAvailable) {
+                            return $q.reject('Contact name taken');
+	                        }
+	                        return true;
+		                    }
+			                );
+			            };
+				        }
+					    };
+						});
+					</script>
+					<section>
+						<h2>Directives</h2>
 
 
-							Directives are HTML markers that tell Angular to attach a specific behavior to that element.
+						<p>Directives are HTML markers that tell Angular to attach a specific behavior to that element.
+						<code>ng-model</code>, <code>ng-view</code>, and <code>ng-repeat</code> are all directives.</p>
 
-							`ng-model`, `ng-view`, and `ng-repeat` are all directives.
-
-							TODO directive example
-
-							New in 1.3: 
-						</script>
+						<p>New in 1.3: <code>ngMessages</code> and (better) <code>custom validators</code></p>
+					</section>
+					<section>
+						<p>
+							<form name='exampleForm'>
+								<input required type="text" name='contactName' ng-model="contactName" my-validator><br>
+                <div ng-if="exampleForm.contactName.$dirty">
+                  <ng-messages for="exampleForm.contactName.$error" class="">
+                    <div ng-message="required">contact name required</div>
+                    <div ng-message="contactName">contact name already in use</div>
+                  </ng-messages>
+                  <div ng-messages="exampleForm.contactName.$pending" class="">
+                    <div ng-message="contactName">Checking contact name availability...</div>
+                  </div>
+                </div>
+							</form>
+						</p>
+						<pre><code>&lt;input required type="text" name='contactName' ng-model="contactName" my-validator>&lt;br>
+&lt;div ng-if="exampleForm.contactName.$dirty">
+  &lt;ng-messages for="exampleForm.contactName.$error" class="">
+    &lt;div ng-message="required">contact name required&lt;/div>
+    &lt;div ng-message="contactName">contact name already in use&lt;/div>
+  &lt;/ng-messages>
+  &lt;div ng-messages="exampleForm.contactName.$pending" class="">
+    &lt;div ng-message="contactName">Checking contact name availability...&lt;/div>
+  &lt;/div>
+&lt;/div></code></pre>
+						<pre><code>return {
+  require: 'ngModel',
+  link: function(scope, element, attrs, ngModel) {
+    ngModel.$asyncValidators.contactName = function(modelValue, viewValue) {
+      return $http
+      	.get('http://localhost:1337/api/contact/check?name='+viewValue)
+      	.then(
+          function(response) {
+            if (!response.data.nameAvailable) {
+              return $q.reject('Contact name taken');
+            }
+            return true;
+          }
+        );
+    };
+  }
+};
+						</code></pre>
 					</section>
 					<!-- Slide -->
-					<section data-markdown>
-						<script type="text/template">
-							## Dependency Injection
+					<script type="text/javascript">
+					angular.module('iaw.dependency', [])
+						.controller('DependencyCtrl', function($scope) {
+						});
+					</script>
+					<section>
+						<h2>Dependency Injection</h2>
 
-							TODO DI example
+						<pre><code>controller('DirectiveCtrl', function($scope)</code></pre>
 
-							New in 1.3: 
-						</script>
+						<p>New in 1.3: Strict DI Mode</p>
+
+						<pre><code>angular.module("myApp", [])
+.controller("BadController", function($scope, $http, $filter) {
+});</code></pre>
+						<pre><code>controller("GoodController2", [
+  "$scope",
+  "$http",
+  "$filter",
+  function($scope, $http, $filter) {
+    // ...
+  }
+]);</code></pre>
+					<pre><code>function GoodController1($scope, $http, $filter) {}
+GoodController1.$inject = ["$scope", "$http", "$filter"];
+
+angular.module("myApp", [])
+.controller("GoodController1", GoodController1)</code></pre>
 					</section>
 				<!-- end section -->
 				</section>
@@ -388,6 +492,11 @@
 							> Tip : Again, yeoman can help here...
 							>
 							> `yo angular:factory Contact`
+							```
+							➜  sample-project git:(lab-2) yo angular:factory Contact
+							create app/scripts/services/contact.js
+							create test/spec/services/contact.js
+							```
 						</script>
 					</section>
 				</section>
@@ -528,8 +637,6 @@
 							![interception](images/interception.gif)
 
 							4 HTTP hooks to easily intercept requests - `request`, `response`, `requestError`, `responseError`
-
-							Useful for:
 
 							* error handling (hint hint)
 							* request signing (authentication)
