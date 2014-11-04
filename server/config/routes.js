@@ -45,5 +45,6 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-  '/api/contact/:id/sms': 'ContactController.sms'
+  '/api/contact/:id/sms': 'ContactController.sms',
+  'get /api/contact/check': 'ContactController.check'
 };
