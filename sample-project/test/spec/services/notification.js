@@ -14,15 +14,15 @@ describe('Service: Notification', function () {
 
   describe('#pop() function', function() {
     it('should close by id', function() {
-      Notification.push('Cats'); // id 0
-      Notification.push('Dogs'); // id 1
-      Notification.push('Birds'); // id 2
+      Notification.push('Cats'); // id 1
+      Notification.push('Dogs'); // id 2
+      Notification.push('Birds'); // id 3
       var promise = Notification.current[1].promise;
       spyOn(interval, 'cancel');
-      Notification.pop(Notification.current[1].id); // should be id 1
+      Notification.pop(Notification.current[1].id); // should be id 2
       expect(Notification.current.length).toBe(2);
-      expect(Notification.current[0].id).toBe(0);
-      expect(Notification.current[1].id).toBe(2);
+      expect(Notification.current[0].id).toBe(1);
+      expect(Notification.current[1].id).toBe(3);
       expect(interval.cancel).toHaveBeenCalledWith(promise);
     });
   });
@@ -50,8 +50,8 @@ describe('Service: Notification', function () {
     it('should give every Notification an id', function() {
       Notification.push('Hello');
       Notification.push('Hi');
-      expect(Notification.current[0].id).toBe(0);
-      expect(Notification.current[1].id).toBe(1);
+      expect(Notification.current[0].id).toBe(1);
+      expect(Notification.current[1].id).toBe(2);
     });
     it('should shorthand error to danger', function() {
       Notification.push({message:'Hello', type: 'error'});

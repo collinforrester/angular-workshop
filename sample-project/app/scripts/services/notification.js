@@ -42,5 +42,5 @@ angular.module('phonebookApp')
           }
         }
       }
-    }.bind(this);
+    };
   });
