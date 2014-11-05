@@ -13,7 +13,11 @@ angular
     'ngResource',
     'ngRoute'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $httpProvider) {
+
+    $httpProvider.interceptors.push('errorInterceptor');
+    $httpProvider.interceptors.push('cacheInterceptor');
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
