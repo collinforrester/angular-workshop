@@ -7,21 +7,27 @@
  * # favoriteState
  */
 angular.module('phonebookApp')
-	.directive('favoriteState', function($http) {
+	.directive('favoriteState', function(Favorite) {
 		return {
 			restrict: 'A',
 			scope: {
 				contact: '='
 			},
-			link: function(scope, element /*, attrs*/ ) {
-				$http.get('http://localhost:1337/api/favorite').then(function(response) {
-					var ids = _.map(response.data, function(fav) {
-						return fav.contact.id;
+			compile: function() {
+				var promise = Favorite
+					.query()
+					.$promise.then(function(response) {
+						return response.map(function(fav) {
+							return fav.contact.id;
+						});
 					});
-					if (ids.indexOf(scope.contact.id) > -1) {
-						element.find('button').attr('disabled', 'disabled');
-					}
-				});
+				return function postLink(scope, element) {
+					promise.then(function(idArray) {
+						if (idArray.indexOf(scope.contact.id) > -1) {
+							element.find('button').attr('disabled', 'disabled');
+						}
+					});
+				};
 			}
 		};
 	});
