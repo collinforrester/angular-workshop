@@ -8,23 +8,7 @@
  * Controller of the phonebookApp
  */
 angular.module('phonebookApp')
-	.controller('FavoritesCtrl', function($scope, $http, $timeout, Favorite) {
-		function showMessage(message, type) {
-			var id = Math.ceil(Math.random() * 99999999);
-			$scope.messages.push({
-				message: message,
-				type: type,
-				id: id
-			});
-			$timeout(function() {
-				for (var i = 0; i < $scope.messages.length; i++) {
-					if ($scope.messages[i].id === id) {
-						$scope.messages.splice(i, 1);
-					}
-				}
-			}, 3000);
-		}
-
+	.controller('FavoritesCtrl', function($scope, Notification, Favorite) {
 		Favorite
 			.query()
 			.$promise
@@ -32,7 +16,7 @@ angular.module('phonebookApp')
 				$scope.favorites = data;
 			})
 			.catch(function(e) {
-				showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
+				Notification.push({ message: 'Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')', type: 'error'});
 			});
 		
 		$scope.removeFromFavorites = function(favorite) {
@@ -40,9 +24,7 @@ angular.module('phonebookApp')
 			favorite.$delete(function() {
 				$scope.favorites.splice(index, 1);
 			}, function(e) {
-				showMessage('Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')');
+				Notification.push({ message: 'Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')', type: 'error'});
 			});
 		};
-
-		$scope.messages = [];
 	});
