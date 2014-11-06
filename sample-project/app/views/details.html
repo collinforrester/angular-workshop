@@ -1,3 +1,4 @@
+<div ng-repeat='message in messages' class="alert alert-{{message.type}}" role="alert" ng-show='messages && messages.length > 0'>{{message.message}}</div>
 <div favorite-state contact='contact'><button ng-click='addToFavorites(contact)' class="btn btn-success ">
 	Add Favorite <span class="glyphicon glyphicon-star"></span>
 	</button>

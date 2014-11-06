@@ -702,7 +702,7 @@ angular.module("myApp", [])
 
 							```
 angular.module('iaw').config(function($httpProvider) {
-  $httpProvider.interceptors.push('cacheInvalidator');
+  $httpProvider.interceptors.push('errorInterceptor');
 });
 							```
 
@@ -751,7 +751,30 @@ angular.module('iaw.interceptors', [])
 					</section>
 				</section>
 				<!-- end section -->
-
+				<section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							# Recap
+							* Saw some new things from AngularJS 1.3
+							* Split an "old" project into modules
+							* Experienced the power of `$resource`
+							* Added generic notifications
+							* Explored some common interceptors
+						</script>
+					</section>
+					<!-- Slide -->
+					<section data-markdown>
+						<script type="text/template">
+							# Thank You
+							
+							## Collin Forrester
+							
+							#### [@cforrester07](https://twitter.com/cforrester07)
+							#### [Email me](mailto:collin.forrester@gmail.com)
+						</script>
+					</section>
+				</section>
 			</div>
 
 		</div>
