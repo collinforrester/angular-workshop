@@ -7,7 +7,7 @@
  * # favoriteState
  */
 angular.module('phonebookApp')
-	.directive('favoriteState', function(Favorite) {
+	.directive('favoriteState', function(Favorite, Contact, Notification) {
 		return {
 			restrict: 'A',
 			scope: {
@@ -23,9 +23,22 @@ angular.module('phonebookApp')
 					});
 				return function postLink(scope, element) {
 					promise.then(function(idArray) {
-						if (idArray.indexOf(scope.contact.id) > -1) {
-							element.find('button').attr('disabled', 'disabled');
-						}
+						var button = element.find('button');
+						var updateButtonState = function() {
+							if (idArray.indexOf(scope.contact.id) > -1) {
+								element.find('button').attr('disabled', 'disabled');
+							}
+						};
+						updateButtonState();
+						button.bind('click', function() {
+							var favorite = new Favorite({ contact: scope.contact.id });
+							favorite.$save(function(updatedContact) {
+								idArray.push(scope.contact.id);
+								updateButtonState();
+							}, function(e) {
+								Notification.push({ message: 'Unable to complete request.  Reason: ' + e.data + ' (status: ' + e.status + ')', type: 'error'});
+							});
+						});
 					});
 				};
 			}
