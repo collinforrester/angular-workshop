@@ -12,6 +12,13 @@ angular.module('phonebookApp')
     var Contact = $resource('http://localhost:1337/api/contact/:id', {
       id: '@id'
     }, {
+      query: {
+        cache: true,
+        isArray: true
+      },
+      get: {
+        cache: true
+      },
       sms: {
         url: 'http://localhost:1337/api/contact/:id/sms',
         method: 'GET',
