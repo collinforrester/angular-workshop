@@ -1,66 +1,24 @@
 # AngularJS Workshop
 
-## Prereqs
-1. A computer
-2. A text editor
-3. A web browser (I'll be using Chrome)
-4. Basic understanding of JavaScript (Objects, truthy/falsy, functions, etc)
-5. AngularJS "Hello World"
+This is the Interface AngularJS workshop project from November 6th, 2014.  Each step of the lab can be found in each of the repos branches.
 
-## Things I WON'T cover
-* Grunt/Gulp build processes
-* Deployment
-* Server and/or server optimizations
-* JavaScript/HTML/CSS intro
-* Start to finish process of an Angular App
+## Slides
 
-We'll be using a generated project layout with a few changes to run the project but this is intended to be focused on the code.
-
-## Agenda
-* AngularJS 10,000 foot overview
-  * Databinding
-  * Directives
-  * Dependency Injection
-* Sample project overview (from github)
-  * "Legacy code"
-  * Pain points
-* Refactor
-  * Directives - use them
-  * Bind once
-  * Link vs compile
-  * Error handling
-* Reorganize
-  * Use AngularJS modules correctly
-* Benchmarks
-  * FPS
-  * Chrome JS Profiler
-
-## 10,000 Foot Overview
-### Databinding
-* TODO - Example
-
-### Directive
-* TODO - Example
-
-### Dependency Injection
-* TODO - Example
+Slides can be find under `slides/`.  No installation necessary, just open `index.html`.
 
 ## Sample Project
-### Legacy Code
-* Wrote yesterday to simulate code from yesteryear
-* Common issues throughout
-* Legacy version of Angular
 
-## Refactor
-### Directives
-* Two directives currently used TODO
-* Link vs compile TODO
+The sample project referred to in the walk throughs and the slides can be found under `sample-project/`.  NPM and bower required to install the sample project.  
 
-### Bind Once
-* Included in 1.3
-* Big performance
+To install:
+1. `cd sample-project`
+2. `npm i && bower i`
+3. `grunt serve`
 
-### Error handling
-* In every controller
-* Not DRY
-* ... not DRY at all
+## API Server
+
+The API server used for our sample project is preconfigured in `server/`.  To install:
+
+1. `cd server`
+2. `npm i`
+3. `node app.js`
