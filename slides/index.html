@@ -173,17 +173,17 @@
 
 						<pre><code>&lt;input ng-model="data"></code></pre>
 		
+
+						<p>New in 1.3: <code>ngModelOptions</code> and one time bindings</p>
+
+						<pre><code>&lt;input ng-model="debouncedModel"></code></pre>
+
 						<p ng-controller="DataBindingCtrl">
 							<input ng-model="data"><br>
 							data: {{data}}<br>
 							<input ng-model="once"><br>
 							once: {{::once}}
 						</p>
-
-						<p>New in 1.3: <code>ngModelOptions</code> and one time bindings</p>
-
-						<pre><code>&lt;input ng-model="debouncedModel"></code></pre>
-
 						<p ng-controller="DataBindingCtrl">
 							<input ng-model="debouncedModel" ng-model-options="{debounce: 500}"><br>
 							debouncedModel: {{debouncedModel}}
